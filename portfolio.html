@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio – 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── AHKIO via @font-face simulation with a chunky display font ── */
+    @import url('https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;600;800;900&display=swap');
+
+    :root {
+      --purple-deep:  #3a0070;
+      --purple-mid:   #7b2fbe;
+      --purple-light: #b05ce8;
+      --pink-hot:     #e040fb;
+      --pink-soft:    #f48cdc;
+      --white:        #ffffff;
+      --card-bg:      rgba(255, 255, 255, 0.95);
+      --card-border:  rgba(255, 255, 255, 1);
+      --shadow-color: rgba(58, 0, 112, 0.55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      overflow: hidden;
+      background: var(--purple-deep);
+    }
+
+    /* ── BACKGROUND ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 30%, #c94fc9 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, #5b0fa8 0%, transparent 55%),
+        linear-gradient(135deg, #3a0070 0%, #7b2fbe 50%, #e040fb 100%);
+      z-index: 0;
+    }
+
+    /* Noise grain overlay */
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      background-size: 180px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* Decorative floating squares (pixel-deco like the image) */
+    .deco {
+      position: fixed;
+      border-radius: 12px;
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 1;
+      animation: floatY 6s ease-in-out infinite;
+    }
+    .deco-1  { width:110px; height:110px; background:#e040fb; top:-20px;  left:-20px; animation-delay:0s; }
+    .deco-2  { width: 70px; height: 70px; background:#b05ce8; top: 90px;  left:-10px; animation-delay:1s; }
+    .deco-3  { width: 90px; height: 90px; background:#7b2fbe; top:185px;  left: 55px; animation-delay:2s; }
+    .deco-4  { width: 80px; height: 80px; background:#e040fb; top: 350px; left:-20px; animation-delay:0.5s;}
+    .deco-5  { width:120px; height:120px; background:#b05ce8; bottom:-30px; left:-15px; animation-delay:1.5s;}
+    .deco-6  { width: 75px; height: 75px; background:#7b2fbe; top:-15px; right:120px; animation-delay:2.5s;}
+    .deco-7  { width:100px; height:100px; background:#e040fb; top:-15px; right:-15px; animation-delay:0.8s;}
+    .deco-8  { width: 65px; height: 65px; background:#b05ce8; top: 80px; right:-10px; animation-delay:3s;}
+    .deco-9  { width: 90px; height: 90px; background:#7b2fbe; top: 260px;right: 30px; animation-delay:1.2s;}
+    .deco-10 { width: 60px; height: 60px; background:#e040fb; bottom: 60px;right:-10px;animation-delay:2.2s;}
+
+    @keyframes floatY {
+      0%,100% { transform: translateY(0px) rotate(0deg); }
+      50%      { transform: translateY(-14px) rotate(3deg); }
+    }
+
+    /* ── CARD WRAPPER for 3D layers ── */
+    .card-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 680px;
+      width: calc(100% - 3rem);
+      animation: cardIn 0.9s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* Layer 3 — deepest, darkest purple */
+    .card-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      background: #3a0070;
+      transform: translate(18px, 18px);
+      z-index: 1;
+    }
+
+    /* Layer 2 — mid purple/pink */
+    .card-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      background: linear-gradient(135deg, #b05ce8, #e040fb);
+      transform: translate(9px, 9px);
+      z-index: 2;
+    }
+
+    /* ── CARD ── */
+    .card {
+      position: relative;
+      z-index: 3;
+      background: var(--card-bg);
+      border: 2px solid rgba(200, 160, 255, 0.25);
+      border-radius: 32px;
+      padding: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 8vw, 6rem);
+      text-align: center;
+
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    @keyframes cardIn {
+      from { opacity:0; transform: translateY(40px) scale(0.95); }
+      to   { opacity:1; transform: translateY(0)    scale(1);    }
+    }
+
+    /* ── TITLE "PORTFOLIO" ── */
+    .title-portfolio {
+      font-family: 'Boogaloo', cursive;
+      font-size: clamp(2.8rem, 12vw, 6.5rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      color: #7b2fbe;
+      text-shadow: 0 2px 12px rgba(180,80,230,0.2);
+      animation: titleIn 1s 0.2s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes titleIn {
+      from { opacity:0; transform: translateY(20px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #e040fb, #7b2fbe);
+      margin: 1.4rem auto 1.2rem;
+      animation: fadeIn 1s 0.4s both;
+    }
+
+    /* ── SUBTITLE NAME ── */
+    .title-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7b2fbe;
+      animation: fadeIn 1s 0.5s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform: translateY(10px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* ── META TAGS ── */
+    .meta {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+      animation: fadeIn 1s 0.65s both;
+    }
+    .meta span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(123,47,190,0.45);
+    }
+    .meta span::before { content: '· '; }
+
+    /* ── BUTTON ── */
+    .btn {
+      display: inline-block;
+      margin-top: 2.4rem;
+      padding: 1rem 2.8rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      border: 2px solid transparent;
+      cursor: pointer;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e040fb 0%, #b05ce8 60%, #7b2fbe 100%);
+      box-shadow:
+        0 4px 20px rgba(224,64,251,0.55),
+        0 1px 0 rgba(255,255,255,0.22) inset;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.22s ease, color 0.22s ease, transform 0.18s ease, box-shadow 0.18s ease, border-color 0.22s ease;
+      animation: fadeIn 1s 0.8s both;
+    }
+
+    .btn:hover {
+      background: #ffffff;
+      color: #7b2fbe;
+      border-color: #b05ce8;
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(224,64,251,0.4);
+    }
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .deco-3, .deco-9 { display: none; }
+      .card { padding: 2.5rem 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+
+  <!-- Decorative squares -->
+  <div class="deco deco-1"></div>
+  <div class="deco deco-2"></div>
+  <div class="deco deco-3"></div>
+  <div class="deco deco-4"></div>
+  <div class="deco deco-5"></div>
+  <div class="deco deco-6"></div>
+  <div class="deco deco-7"></div>
+  <div class="deco deco-8"></div>
+  <div class="deco deco-9"></div>
+  <div class="deco deco-10"></div>
+
+  <!-- Card -->
+  <div class="card-wrapper">
+  <div class="card">
+    <h1 class="title-portfolio">PORTFOLIO</h1>
+    <div class="divider"></div>
+    <p class="title-name">Charlotte Vignault</p>
+
+    <div class="meta">
+      <span>2026</span>
+      <span>France</span>
+      <span>Poitiers</span>
+    </div>
+
+    <a href="VIGNAULT CHARLOTTE PORTFOLIO 2026.pdf" class="btn">Consulter le portfolio</a>
+  </div><!-- /.card -->
+  </div><!-- /.card-wrapper -->
+
+</body>
+</html>
